@@ -9,7 +9,6 @@ public class PowerUp : MonoBehaviour
     [SerializeField] private Paddle rightPaddle;
     [SerializeField] private GameManager gameManager;
 
-    private Ball gameBall;
     private Rigidbody rb;
     public Vector3 pos;
 
@@ -23,14 +22,13 @@ public class PowerUp : MonoBehaviour
     {
         //do something interesting to the ball, paddle, or some other game element
         
-
+        gameBall = other.GetComponent<Ball>(); 
         // on contact with the ball make the ball clear       
         if(this.name == "InvisiBall")
-        {
-            gameBall = other.GetComponent<Ball>();
+        {    
             if(gameBall) gameBall.changeColor(Color.clear);
         }
-        if(this.name == "Loss")
+        if(this.name == "Loss" && !gameBall.startShot)
         {
             rb = other.GetComponent<Rigidbody>();
             gameManager.unScore(rb.velocity);

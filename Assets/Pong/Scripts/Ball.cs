@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
     public float startSpeed;
     public float step;
     public bool useDebugVisualization;
+    public bool startShot;
 
     private float speed;
     private Rigidbody rb;
@@ -23,10 +24,12 @@ public class Ball : MonoBehaviour {
     // Update is called once per frame
     public void Restart(Goal goal)
     {
-
         speed = startSpeed;
         rb.MovePosition(Vector3.zero);
+
+        startShot = true;
         changeColor(Color.white);
+
         if(goal == leftGoal) gameObject.GetComponent<Rigidbody>().velocity = Vector3.left * speed;
         else gameObject.GetComponent<Rigidbody>().velocity = Vector3.right * speed; // possibly randomize starting ball: if(goal == rightGoal)
         // else gameObject.GetComponent<Rigidbody>().velocity = Vector3.right * speed; // change to send to losing side
@@ -55,6 +58,8 @@ public class Ball : MonoBehaviour {
 
             // refresh color
             changeColor(Color.white);
+
+            startShot = false;
 
             bool hitLeftPaddle = collision.gameObject.name == "PaddleLeft";
             float newHorizontalSpeed = (hitLeftPaddle) ? speed: -speed;
